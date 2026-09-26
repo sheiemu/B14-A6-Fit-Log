@@ -2,6 +2,7 @@ import Image from "next/image";
 import WorkoutActions from "./WorkoutActions";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { notFound } from "next/navigation";
 type Props = {
   params: Promise<{
     id: string;
@@ -16,6 +17,9 @@ export default async function WorkoutDetails({ params }: Props) {
   );
 
   const workout = await response.json();
+  if (!workout || !workout.id) {
+  notFound();
+}
 
   return (
     <main className="min-h-screen bg-black text-white">
