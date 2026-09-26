@@ -15,15 +15,29 @@ export default function WorkoutActions({
     );
 
     const alreadyAdded = existingPlan.some(
-      (item: any) => item.id === workout.id
+      (item: any) =>
+        String(item.id) === String(workout.id) ||
+        item.name === workout.name
     );
 
-    if (!alreadyAdded) {
-      localStorage.setItem(
-        "fitlog-plan",
-        JSON.stringify([...existingPlan, workout])
-      );
+    if (alreadyAdded) {
+      toast.info("Already added to today's plan");
+      return;
     }
+
+    if (existingPlan.length >= 5) {
+      toast.info("Today's plan can have up to 5 exercises");
+      return;
+    }
+
+    const updatedPlan = [...existingPlan, workout];
+
+    localStorage.setItem(
+      "fitlog-plan",
+      JSON.stringify(updatedPlan)
+    );
+
+    window.dispatchEvent(new Event("fitlog-update"));
 
     toast.success("Added to today's plan");
   };
@@ -34,15 +48,24 @@ export default function WorkoutActions({
     );
 
     const alreadySaved = existingSaved.some(
-      (item: any) => item.id === workout.id
+      (item: any) =>
+        String(item.id) === String(workout.id) ||
+        item.name === workout.name
     );
 
-    if (!alreadySaved) {
-      localStorage.setItem(
-        "fitlog-saved",
-        JSON.stringify([...existingSaved, workout])
-      );
+    if (alreadySaved) {
+      toast.info("Already saved");
+      return;
     }
+
+    const updatedSaved = [...existingSaved, workout];
+
+    localStorage.setItem(
+      "fitlog-saved",
+      JSON.stringify(updatedSaved)
+    );
+
+    window.dispatchEvent(new Event("fitlog-update"));
 
     toast.success("Saved for later");
   };
@@ -54,7 +77,7 @@ export default function WorkoutActions({
         className="flex items-center gap-2 rounded-full bg-[#ccff00] px-6 py-3 text-sm font-bold text-black transition hover:bg-[#b8e600]"
       >
         <span>＋</span>
-        Add to today's plan
+        Add to today&apos;s plan
       </button>
 
       <button

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 
 export default async function Workouts() {
   const response = await fetch(
@@ -10,66 +11,7 @@ export default async function Workouts() {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-black px-6 py-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="FitLog logo"
-              width={38}
-              height={38}
-            />
-
-            <span className="text-xl font-bold tracking-wide">
-              FITLOG
-            </span>
-          </Link>
-
-          {/* Navigation */}
-          <div className="flex items-center gap-2">
-            <Link
-              href="/workouts"
-              className="rounded-full px-5 py-2 text-sm font-medium text-[#ccff00]"
-            >
-              WORKOUTS
-            </Link>
-
-            <Link
-              href="/my-plan"
-              className="rounded-full px-5 py-2 text-sm font-medium text-white hover:bg-[#1c1f00]"
-            >
-              MY PLAN
-            </Link>
-          </div>
-
-          {/* Plan & Saved */}
-          <div className="flex items-center gap-5">
-            <Link
-              href="/my-plan"
-              className="flex items-center gap-2 text-sm font-medium"
-            >
-              <span>Plan</span>
-
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ccff00] text-xs font-bold text-black">
-                0
-              </span>
-            </Link>
-
-            <Link
-              href="/my-plan"
-              className="flex items-center gap-2 text-sm font-medium"
-            >
-              <span>Saved</span>
-
-              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-zinc-500 text-xs">
-                0
-              </span>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero */}
       <section className="mx-auto mt-6 max-w-7xl px-6">
@@ -85,7 +27,8 @@ export default async function Workouts() {
 
             <p className="mt-5 max-w-md text-sm leading-6 text-zinc-400">
               FitLog is a dark, no-nonsense gym companion: pick a lift,
-              lock it into today’s plan, and watch the week’s work add up.
+              lock it into today&apos;s plan, and watch the week&apos;s work
+              add up.
             </p>
 
             <a
@@ -144,14 +87,16 @@ export default async function Workouts() {
               <div className="p-5">
                 {/* Muscle Group Tags */}
                 <div className="flex flex-wrap gap-2">
-                  {workout.muscleGroups?.map((muscle: string) => (
-                    <span
-                      key={muscle}
-                      className="rounded-full bg-[#262900] px-3 py-1 text-[10px] font-medium text-[#ccff00]"
-                    >
-                      {muscle}
-                    </span>
-                  ))}
+                  {workout.muscleGroups?.map(
+                    (muscle: string) => (
+                      <span
+                        key={muscle}
+                        className="rounded-full bg-[#262900] px-3 py-1 text-[10px] font-medium text-[#ccff00]"
+                      >
+                        {muscle}
+                      </span>
+                    )
+                  )}
                 </div>
 
                 {/* Workout Name */}
@@ -167,9 +112,7 @@ export default async function Workouts() {
                 {/* Workout Stats */}
                 <div className="mt-4 flex items-center justify-between border-t border-zinc-800 pt-4 text-xs text-zinc-400">
                   <span>{workout.duration} min</span>
-
                   <span>{workout.caloriesBurned} kcal</span>
-
                   <span>★ {workout.rating}</span>
                 </div>
               </div>
