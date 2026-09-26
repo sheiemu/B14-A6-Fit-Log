@@ -11,7 +11,7 @@ export default function Home() {
     <main className="min-h-screen bg-black">
 
       {/* Navbar */}
-      <nav className="bg-black px-6 py-4 text-white">
+      <nav className="sticky top-0 z-50 bg-black px-6 py-4 text-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
 
           {/* Logo */}
@@ -125,6 +125,21 @@ export default function Home() {
 
   </div>
 </section>
+
+<section id="library" className="mx-auto max-w-7xl px-6 py-16">
+  <p className="text-xs font-bold tracking-widest text-[#ccff00]">
+    WORKOUT LIBRARY
+  </p>
+
+  <h2 className="mt-2 text-3xl font-black text-white">
+    THE LIBRARY
+  </h2>
+
+  <p className="mt-2 text-sm text-zinc-400">
+    Twelve lifts covering every major muscle group.
+  </p>
+</section>
+
 </main>
   );
 }
