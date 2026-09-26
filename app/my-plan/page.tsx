@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Footer from "@/components/Footer";
 
 type Workout = {
   id: number | string;
@@ -422,6 +423,7 @@ export default function MyPlan() {
           </div>
         )}
       </section>
+      <Footer />
     </main>
   );
 }

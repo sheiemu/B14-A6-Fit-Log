@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default async function Workouts() {
   const response = await fetch(
@@ -120,6 +121,7 @@ export default async function Workouts() {
           ))}
         </div>
       </section>
+      <Footer />
     </main>
   );
 }
