@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import WorkoutActions from "./WorkoutActions";
 
 type Props = {
   params: Promise<{
@@ -207,17 +208,8 @@ export default async function WorkoutDetails({ params }: Props) {
             </div>
 
             {/* Buttons */}
-            <div className="mt-10 flex flex-wrap gap-4">
-              <button className="flex items-center gap-2 rounded-full bg-[#ccff00] px-6 py-3 text-sm font-bold text-black transition hover:bg-[#b8e600]">
-                <span>＋</span>
-                Add to today&apos;s plan
-              </button>
-
-              <button className="flex items-center gap-2 rounded-full border border-zinc-700 bg-black px-6 py-3 text-sm font-bold text-white transition hover:border-[#ccff00] hover:text-[#ccff00]">
-                <span>♡</span>
-                Save for later
-              </button>
-            </div>
+            {/* Buttons */}
+<WorkoutActions workout={workout} />
           </div>
         </div>
       </section>
