@@ -125,9 +125,10 @@ export default async function Workouts() {
         {/* Workout Cards */}
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {workouts.map((workout: any) => (
-            <div
+            <Link
               key={workout.id}
-              className="overflow-hidden rounded-lg border border-transparent bg-[#15171c] transition-colors duration-200 hover:border-[#ccff00]"
+              href={`/workouts/${workout.id}`}
+              className="block overflow-hidden rounded-lg border border-transparent bg-[#15171c] transition-colors duration-200 hover:border-[#ccff00]"
             >
               {/* Workout Image */}
               <div className="relative h-48 overflow-hidden">
@@ -172,7 +173,7 @@ export default async function Workouts() {
                   <span>★ {workout.rating}</span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
