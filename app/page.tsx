@@ -8,7 +8,7 @@ export default function Home() {
   const pathname = usePathname();
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-black">
 
       {/* Navbar */}
       <nav className="bg-black px-6 py-4 text-white">
@@ -87,13 +87,44 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Temporary content */}
-      <section className="flex min-h-[70vh] items-center justify-center">
-        <h1 className="text-4xl font-bold text-gray-900">
-          FITLOG
-        </h1>
-      </section>
+      {/* Hero */}
+<section className="mx-auto mt-6 max-w-7xl px-6">
+  <div className="relative overflow-hidden rounded-lg bg-[#15171c] px-8 py-10 md:px-12 md:py-12">
 
-    </main>
+    <div className="max-w-xl">
+      <p className="mb-3 text-[10px] font-bold tracking-widest text-[#ccff00]">
+        WORKOUT LIBRARY
+      </p>
+
+      <h1 className="text-4xl font-black leading-none text-white md:text-5xl">
+        TRAIN WITH INTENT. LOG EVERY SET.
+      </h1>
+
+      <p className="mt-5 max-w-md text-sm leading-6 text-zinc-400">
+        FitLog is a dark, no-nonsense gym companion: pick a lift,
+        lock it into today’s plan, and watch the week’s work add up.
+      </p>
+
+      <a
+        href="#library"
+        className="mt-6 inline-block rounded-sm bg-[#ccff00] px-5 py-3 text-[11px] font-bold text-black"
+      >
+        BROWSE WORKOUTS
+      </a>
+    </div>
+
+    <div className="absolute right-4 top-1/2 hidden -translate-y-1/2 md:block">
+      <Image
+        src="/banner.png"
+        alt="Workout"
+        width={280}
+        height={220}
+        className="object-contain"
+      />
+    </div>
+
+  </div>
+</section>
+</main>
   );
 }
