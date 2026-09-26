@@ -32,72 +32,154 @@ export default function Navbar() {
     window.addEventListener("fitlog-update", handleStorageChange);
 
     return () => {
-      window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener("fitlog-update", handleStorageChange);
+      window.removeEventListener(
+        "storage",
+        handleStorageChange
+      );
+
+      window.removeEventListener(
+        "fitlog-update",
+        handleStorageChange
+      );
     };
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-black px-6 py-4">
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-black px-4 py-3 sm:px-6 sm:py-4">
+      <div className="mx-auto max-w-7xl">
 
-        {/* Logo */}
-        <Link
-          href="/workouts"
-          className="flex items-center gap-3"
-        >
-          <Image
-            src="/logo.png"
-            alt="FitLog logo"
-            width={38}
-            height={38}
-          />
+        {/* Mobile */}
+        <div className="md:hidden">
 
-          <span className="text-xl font-bold tracking-wide">
-            FITLOG
-          </span>
-        </Link>
+          {/* Top Row */}
+          <div className="flex w-full items-center justify-between">
 
-        {/* Navigation */}
-        <div className="flex items-center gap-2">
-          <Link
-            href="/workouts"
-            className="rounded-full px-5 py-2 text-sm font-medium text-white hover:bg-[#1c1f00]"
-          >
-            WORKOUTS
-          </Link>
+            {/* Logo */}
+            <Link
+              href="/workouts"
+              className="flex shrink-0 items-center gap-2"
+            >
+              <Image
+                src="/logo.png"
+                alt="FitLog logo"
+                width={34}
+                height={34}
+              />
 
-          <Link
-            href="/my-plan"
-            className="rounded-full px-5 py-2 text-sm font-medium text-white hover:bg-[#1c1f00]"
-          >
-            MY PLAN
-          </Link>
+              <span className="text-lg font-bold tracking-wide">
+                FITLOG
+              </span>
+            </Link>
+
+            {/* Plan & Saved */}
+            <div className="flex shrink-0 items-center gap-3">
+
+              <Link
+                href="/my-plan"
+                className="flex items-center gap-1.5 text-xs font-medium whitespace-nowrap"
+              >
+                <span>Plan</span>
+
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#ccff00] text-[10px] font-bold text-black">
+                  {planCount}
+                </span>
+              </Link>
+
+              <Link
+                href="/my-plan"
+                className="flex items-center gap-1.5 text-xs font-medium whitespace-nowrap"
+              >
+                <span>Saved</span>
+
+                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-zinc-500 text-[10px]">
+                  {savedCount}
+                </span>
+              </Link>
+
+            </div>
+          </div>
+
+          {/* Navigation Row */}
+          <div className="mt-3 flex w-full items-center justify-center gap-2">
+            <Link
+              href="/workouts"
+              className="rounded-full px-5 py-2 text-xs font-medium text-white hover:bg-[#1c1f00]"
+            >
+              WORKOUTS
+            </Link>
+
+            <Link
+              href="/my-plan"
+              className="rounded-full px-5 py-2 text-xs font-medium text-white hover:bg-[#1c1f00]"
+            >
+              MY PLAN
+            </Link>
+          </div>
         </div>
 
-        {/* Plan & Saved */}
-        <div className="flex items-center gap-5">
-          <Link
-            href="/my-plan"
-            className="flex items-center gap-2 text-sm font-medium"
-          >
-            <span>Plan</span>
+        {/* Tablet / Desktop */}
+        <div className="hidden md:flex md:items-center md:justify-between">
 
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ccff00] text-xs font-bold text-black">
-              {planCount}
+          {/* Logo */}
+          <Link
+            href="/workouts"
+            className="flex items-center gap-3"
+          >
+            <Image
+              src="/logo.png"
+              alt="FitLog logo"
+              width={38}
+              height={38}
+            />
+
+            <span className="text-xl font-bold tracking-wide">
+              FITLOG
             </span>
           </Link>
 
-          <Link
-            href="/my-plan"
-            className="flex items-center gap-2 text-sm font-medium"
-          >
-            <span>Saved</span>
+          {/* Navigation */}
+          <div className="flex items-center gap-2">
+            <Link
+              href="/workouts"
+              className="rounded-full px-5 py-2 text-sm font-medium text-white hover:bg-[#1c1f00]"
+            >
+              WORKOUTS
+            </Link>
 
-            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-zinc-500 text-xs">
-              {savedCount}
-            </span>
-          </Link>
+            <Link
+              href="/my-plan"
+              className="rounded-full px-5 py-2 text-sm font-medium text-white hover:bg-[#1c1f00]"
+            >
+              MY PLAN
+            </Link>
+          </div>
+
+          {/* Plan & Saved */}
+          <div className="flex items-center gap-5">
+
+            <Link
+              href="/my-plan"
+              className="flex items-center gap-2 text-sm font-medium"
+            >
+              <span>Plan</span>
+
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ccff00] text-xs font-bold text-black">
+                {planCount}
+              </span>
+            </Link>
+
+            <Link
+              href="/my-plan"
+              className="flex items-center gap-2 text-sm font-medium"
+            >
+              <span>Saved</span>
+
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-zinc-500 text-xs">
+                {savedCount}
+              </span>
+            </Link>
+
+          </div>
         </div>
 
       </div>
