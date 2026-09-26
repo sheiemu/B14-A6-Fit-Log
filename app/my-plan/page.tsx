@@ -15,11 +15,14 @@ type Workout = {
   rating: number;
 };
 
+type SortOption = "duration" | "calories" | "rating";
+
 export default function MyPlan() {
   const [plan, setPlan] = useState<Workout[]>([]);
   const [saved, setSaved] = useState<Workout[]>([]);
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState<SortOption>("duration");
 
   const loadData = () => {
     const storedPlan = JSON.parse(
@@ -50,67 +53,94 @@ export default function MyPlan() {
   }, []);
 
   const removeFromPlan = (id: number | string) => {
-  const updatedPlan = plan.filter(
-    (workout) => String(workout.id) !== String(id)
-  );
+    const updatedPlan = plan.filter(
+      (workout) => String(workout.id) !== String(id)
+    );
 
-  setPlan(updatedPlan);
+    setPlan(updatedPlan);
 
-  localStorage.setItem(
-    "fitlog-plan",
-    JSON.stringify(updatedPlan)
-  );
+    localStorage.setItem(
+      "fitlog-plan",
+      JSON.stringify(updatedPlan)
+    );
 
-  window.dispatchEvent(new Event("fitlog-update"));
+    window.dispatchEvent(new Event("fitlog-update"));
 
-  toast.success("Removed from today's plan");
-};
+    toast.success("Removed from today's plan");
+  };
 
-const removeFromSaved = (id: number | string) => {
-  const updatedSaved = saved.filter(
-    (workout) => String(workout.id) !== String(id)
-  );
+  const removeFromSaved = (id: number | string) => {
+    const updatedSaved = saved.filter(
+      (workout) => String(workout.id) !== String(id)
+    );
 
-  setSaved(updatedSaved);
+    setSaved(updatedSaved);
 
-  localStorage.setItem(
-    "fitlog-saved",
-    JSON.stringify(updatedSaved)
-  );
+    localStorage.setItem(
+      "fitlog-saved",
+      JSON.stringify(updatedSaved)
+    );
 
-  window.dispatchEvent(new Event("fitlog-update"));
+    window.dispatchEvent(new Event("fitlog-update"));
 
-  toast.success("Removed from saved");
-};
+    toast.success("Removed from saved");
+  };
 
-const markAsDone = (id: number | string) => {
-  const updatedPlan = plan.filter(
-    (workout) => String(workout.id) !== String(id)
-  );
+  const markAsDone = (id: number | string) => {
+    const updatedPlan = plan.filter(
+      (workout) => String(workout.id) !== String(id)
+    );
 
-  setPlan(updatedPlan);
+    setPlan(updatedPlan);
 
-  localStorage.setItem(
-    "fitlog-plan",
-    JSON.stringify(updatedPlan)
-  );
+    localStorage.setItem(
+      "fitlog-plan",
+      JSON.stringify(updatedPlan)
+    );
 
-  window.dispatchEvent(new Event("fitlog-update"));
+    window.dispatchEvent(new Event("fitlog-update"));
 
-  toast.success("Workout marked as done");
-};
+    toast.success("Workout marked as done");
+  };
+
   const currentList =
     activeTab === "plan" ? plan : saved;
 
-  const exercises = plan.length;
+  const sortedList = [...currentList].sort(
+    (a, b) => {
+      if (sortBy === "duration") {
+        return (
+          Number(a.duration || 0) -
+          Number(b.duration || 0)
+        );
+      }
 
-  const minutes = plan.reduce(
+      if (sortBy === "calories") {
+        return (
+          Number(a.caloriesBurned || 0) -
+          Number(b.caloriesBurned || 0)
+        );
+      }
+
+      return (
+        Number(a.rating || 0) -
+        Number(b.rating || 0)
+      );
+    }
+  );
+
+  const statsList =
+    activeTab === "plan" ? plan : saved;
+
+  const exercises = statsList.length;
+
+  const minutes = statsList.reduce(
     (total, workout) =>
       total + Number(workout.duration || 0),
     0
   );
 
-  const calories = plan.reduce(
+  const calories = statsList.reduce(
     (total, workout) =>
       total + Number(workout.caloriesBurned || 0),
     0
@@ -226,29 +256,65 @@ const markAsDone = (id: number | string) => {
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="mt-12 flex gap-2 border-b border-zinc-800">
-          <button
-            onClick={() => setActiveTab("plan")}
-            className={`px-5 py-3 text-sm font-bold ${
-              activeTab === "plan"
-                ? "border-b-2 border-[#ccff00] text-[#ccff00]"
-                : "text-zinc-500"
-            }`}
-          >
-            TODAY&apos;S PLAN
-          </button>
+        {/* Tabs + Sort */}
+        <div className="mt-12 flex flex-col gap-4 border-b border-zinc-800 md:flex-row md:items-end md:justify-between">
+          {/* Tabs */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => setActiveTab("plan")}
+              className={`px-5 py-3 text-sm font-bold ${
+                activeTab === "plan"
+                  ? "border-b-2 border-[#ccff00] text-[#ccff00]"
+                  : "text-zinc-500"
+              }`}
+            >
+              TODAY&apos;S PLAN
+            </button>
 
-          <button
-            onClick={() => setActiveTab("saved")}
-            className={`px-5 py-3 text-sm font-bold ${
-              activeTab === "saved"
-                ? "border-b-2 border-[#ccff00] text-[#ccff00]"
-                : "text-zinc-500"
-            }`}
-          >
-            SAVED
-          </button>
+            <button
+              onClick={() => setActiveTab("saved")}
+              className={`px-5 py-3 text-sm font-bold ${
+                activeTab === "saved"
+                  ? "border-b-2 border-[#ccff00] text-[#ccff00]"
+                  : "text-zinc-500"
+              }`}
+            >
+              SAVED
+            </button>
+          </div>
+
+          {/* Sort */}
+          <div className="mb-2 flex items-center gap-2">
+            <label
+              htmlFor="sort"
+              className="text-xs font-medium uppercase tracking-wider text-zinc-500"
+            >
+              Sort By
+            </label>
+
+            <select
+              id="sort"
+              value={sortBy}
+              onChange={(e) =>
+                setSortBy(
+                  e.target.value as SortOption
+                )
+              }
+              className="rounded-full border border-zinc-700 bg-[#15171c] px-4 py-2 text-xs font-medium text-white outline-none focus:border-[#ccff00]"
+            >
+              <option value="duration">
+                Duration
+              </option>
+
+              <option value="calories">
+                Calories
+              </option>
+
+              <option value="rating">
+                Rating
+              </option>
+            </select>
+          </div>
         </div>
 
         {/* Loading */}
@@ -258,7 +324,7 @@ const markAsDone = (id: number | string) => {
               Loading workouts…
             </p>
           </div>
-        ) : currentList.length === 0 ? (
+        ) : sortedList.length === 0 ? (
           /* Empty State */
           <div className="py-24 text-center">
             <h2 className="text-2xl font-black">
@@ -270,7 +336,7 @@ const markAsDone = (id: number | string) => {
             </p>
 
             <Link
-              href="/"
+              href="/workouts"
               className="mt-6 inline-block rounded-full bg-[#ccff00] px-6 py-3 text-sm font-bold text-black"
             >
               GO TO WORKOUTS
@@ -279,7 +345,7 @@ const markAsDone = (id: number | string) => {
         ) : (
           /* Workout List */
           <div className="mt-8 space-y-5">
-            {currentList.map((workout) => (
+            {sortedList.map((workout) => (
               <div
                 key={workout.id}
                 className="flex flex-col gap-5 rounded-xl bg-[#15171c] p-5 md:flex-row md:items-center"
