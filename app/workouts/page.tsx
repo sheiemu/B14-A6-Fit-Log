@@ -68,7 +68,7 @@ export default function Workouts() {
               </div>
 
               {/* Hero Image */}
-              <div className="absolute right-4 top-1/2 hidden -translate-y-1/2 md:block">
+              <div className="mt-6 flex justify-center md:absolute md:right-4 md:top-1/2 md:mt-0 md:-translate-y-1/2">
                 <Image
                   src="/banner.png"
                   alt="Workout"
