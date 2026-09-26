@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   const [planCount, setPlanCount] = useState(0);
   const [savedCount, setSavedCount] = useState(0);
 
@@ -32,15 +35,8 @@ export default function Navbar() {
     window.addEventListener("fitlog-update", handleStorageChange);
 
     return () => {
-      window.removeEventListener(
-        "storage",
-        handleStorageChange
-      );
-
-      window.removeEventListener(
-        "fitlog-update",
-        handleStorageChange
-      );
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("fitlog-update", handleStorageChange);
     };
   }, []);
 
@@ -76,7 +72,7 @@ export default function Navbar() {
 
               <Link
                 href="/my-plan"
-                className="flex items-center gap-1.5 text-xs font-medium whitespace-nowrap"
+                className="flex items-center gap-1.5 whitespace-nowrap text-xs font-medium"
               >
                 <span>Plan</span>
 
@@ -87,7 +83,7 @@ export default function Navbar() {
 
               <Link
                 href="/my-plan"
-                className="flex items-center gap-1.5 text-xs font-medium whitespace-nowrap"
+                className="flex items-center gap-1.5 whitespace-nowrap text-xs font-medium"
               >
                 <span>Saved</span>
 
@@ -101,19 +97,29 @@ export default function Navbar() {
 
           {/* Navigation Row */}
           <div className="mt-3 flex w-full items-center justify-center gap-2">
+
             <Link
               href="/workouts"
-              className="rounded-full px-5 py-2 text-xs font-medium text-white hover:bg-[#1c1f00]"
+              className={`rounded-full px-5 py-2 text-xs font-medium ${
+                pathname === "/workouts"
+                  ? "text-[#ccff00]"
+                  : "text-white"
+              } hover:bg-[#1c1f00]`}
             >
               WORKOUTS
             </Link>
 
             <Link
               href="/my-plan"
-              className="rounded-full px-5 py-2 text-xs font-medium text-white hover:bg-[#1c1f00]"
+              className={`rounded-full px-5 py-2 text-xs font-medium ${
+                pathname === "/my-plan"
+                  ? "text-[#ccff00]"
+                  : "text-white"
+              } hover:bg-[#1c1f00]`}
             >
               MY PLAN
             </Link>
+
           </div>
         </div>
 
@@ -139,19 +145,29 @@ export default function Navbar() {
 
           {/* Navigation */}
           <div className="flex items-center gap-2">
+
             <Link
               href="/workouts"
-              className="rounded-full px-5 py-2 text-sm font-medium text-white hover:bg-[#1c1f00]"
+              className={`rounded-full px-5 py-2 text-sm font-medium ${
+                pathname === "/workouts"
+                  ? "text-[#ccff00]"
+                  : "text-white"
+              } hover:bg-[#1c1f00]`}
             >
               WORKOUTS
             </Link>
 
             <Link
               href="/my-plan"
-              className="rounded-full px-5 py-2 text-sm font-medium text-white hover:bg-[#1c1f00]"
+              className={`rounded-full px-5 py-2 text-sm font-medium ${
+                pathname === "/my-plan"
+                  ? "text-[#ccff00]"
+                  : "text-white"
+              } hover:bg-[#1c1f00]`}
             >
               MY PLAN
             </Link>
+
           </div>
 
           {/* Plan & Saved */}

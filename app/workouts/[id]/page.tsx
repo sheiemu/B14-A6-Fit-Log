@@ -1,7 +1,7 @@
 import Image from "next/image";
 import WorkoutActions from "./WorkoutActions";
 import Navbar from "@/components/Navbar";
-
+import Footer from "@/components/Footer";
 type Props = {
   params: Promise<{
     id: string;
@@ -149,6 +149,8 @@ export default async function WorkoutDetails({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }
