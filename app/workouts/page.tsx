@@ -138,11 +138,23 @@ export default function Workouts() {
                     </p>
 
                     {/* Workout Stats */}
-                    <div className="mt-4 flex items-center justify-between border-t border-zinc-800 pt-4 text-xs text-zinc-400">
-                      <span>{workout.duration} min</span>
-                      <span>{workout.caloriesBurned} kcal</span>
-                      <span>★ {workout.rating}</span>
-                    </div>
+                    {/* Workout Stats */}
+<div className="mt-4 flex items-center justify-between border-t border-zinc-800 pt-4 text-xs text-zinc-400">
+  <span className="flex items-center gap-1">
+    <span className="text-yellow-400">◷</span>
+    {workout.duration} min
+  </span>
+
+  <span className="flex items-center gap-1">
+  <span className="text-yellow-400">🔥</span>
+  {workout.caloriesBurned} kcal
+</span>
+
+  <span className="flex items-center gap-1">
+    <span className="text-yellow-400">★</span>
+    {workout.rating}
+  </span>
+</div>
                   </div>
                 </Link>
               ))}

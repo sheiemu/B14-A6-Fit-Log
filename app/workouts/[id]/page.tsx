@@ -2,7 +2,6 @@ import Image from "next/image";
 import WorkoutActions from "./WorkoutActions";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { notFound } from "next/navigation";
 type Props = {
   params: Promise<{
     id: string;
@@ -17,26 +16,23 @@ export default async function WorkoutDetails({ params }: Props) {
   );
 
   const workout = await response.json();
-  if (!workout || !workout.id) {
-  notFound();
-}
 
   return (
     <main className="min-h-screen bg-black text-white">
       <Navbar />
 
       <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid items-start gap-12 md:grid-cols-2">
+        <div className="grid items-stretch gap-12 md:grid-cols-2">
 
           {/* Left Side - Image */}
-          <div className="relative h-[560px] overflow-hidden rounded-lg">
-            <Image
-              src={workout.image}
-              alt={workout.name}
-              fill
-              className="object-cover"
-            />
-          </div>
+          <div className="relative min-h-[500px] overflow-hidden rounded-lg md:h-full">
+  <Image
+    src={workout.image}
+    alt={workout.name}
+    fill
+    className="object-cover"
+  />
+</div>
 
           {/* Right Side */}
           <div>
